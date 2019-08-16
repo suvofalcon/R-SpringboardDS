@@ -33,3 +33,9 @@ Machine learning algorithm implementations, related to the areas of Text Analyti
 * Regular Expressions Jigsaw Assignment
 * Sentiment Analysis Sony reviews
 * Sentiment Analysis with Naive Bayes Classifier
+* Sentiment Analysis on Jigsaw Assignment - tweets dataset
+* Topic Modelling on NYTimes dataset
+* Topic Modelling on USCongress dataset
+* Network Analysis on Tweets dataset
+* Hierarchial Clustering on Obamatweets dataset
+* Hierarchial Clustering on NYTimes dataset
