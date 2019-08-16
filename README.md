@@ -14,3 +14,11 @@ This repository consists of Code written in R depicting exploratory data analysi
 * Data Exploration on Telecom dataset
 * Demo on how to parse a tabular data from a web page
 
+## Data Visualizations
+R Code related to Data Visualizations.This repository consists of extensive R Code related to Data Visualisations This refers the ggplot2 package extensively
+
+* Some quick exploration plots
+* Bar graphs using ggplot2
+* Line graphs using ggplot2
+* Scatter plots using ggplot2
+* Data Distributions using ggplot2
