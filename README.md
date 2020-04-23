@@ -23,6 +23,14 @@ R Code related to Data Visualizations.This repository consists of extensive R Co
 * Scatter plots using ggplot2
 * Data Distributions using ggplot2
 
+## Algorithm Techniques
+R Code realted to various Machine learning Algorithms
+
+* ANOVA (Analysis of Variances)
+* Association Rules using Apriori Algorithm
+* K-Means clustering
+
+
 ## Text Analytics
 Machine learning algorithm implementations, related to the areas of Text Analytics. The following Algorithms are implemented till now Demonstration of Tm Package Regular Expressions in R Sentiment Analysis using Naive Bayes, Maximum Entropy, Decision Trees, Random Forest, Support Vector Machines
 
