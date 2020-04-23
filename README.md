@@ -29,6 +29,19 @@ R Code realted to various Machine learning Algorithms
 * ANOVA (Analysis of Variances)
 * Association Rules using Apriori Algorithm
 * K-Means clustering
+* Decision Tree Implementations
+* Feature Selection using Boruta Package
+* K-Nearest Neighbour Classification
+* Linear Discriminant Analysis
+* Linear Regression
+* Logistic Regression
+* Naive Bayes Implementation
+* Principal Component Analysis
+* Polynomial Regression
+* Random Forest Implementation
+* Survival Analysis
+* Support Vector Machines
+* Time Series
 
 
 ## Text Analytics
