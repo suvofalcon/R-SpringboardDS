@@ -1,0 +1,175 @@
+---
+title: "TimeSeries-BasicHousekeeping"
+output:
+  html_document: default
+  pdf_document: default
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+## R Markdown
+
+### Machine Learning Basic Housekeeping for Time Series Analysis
+
+We will revisit some basic R Syntax for quick recap before we attempt Time Series Forecasting
+
+
+### How to Load data from various file formats
+```{r Reading from various file formats}
+# read from CSV
+resp1 <- read.csv("/Volumes/Data/CodeMagic/Data Files/Udemy/TimeSeriesData/Resp1.csv",header = TRUE)
+# Check some initial rows
+head(resp1)
+# Learn more about the structure of the data
+str(resp1)
+
+# read another file
+# This has a separator as ';'
+winer1 <- read.csv("/Volumes/Data/CodeMagic/Data Files/Udemy/TimeSeriesData/winequality-red.csv",sep = ";",header = TRUE)
+head(winer1)
+str(winer1)
+# Run a summary statistics
+summary(winer1)
+
+# read from xls
+library(readxl)
+dfb <- read_excel("/Volumes/Data/CodeMagic/Data Files/Udemy/TimeSeriesData/boston1.xls")
+head(dfb)
+summary(dfb)
+
+# using Rcurl to read csv data hosted online
+library(RCurl)
+data1 <- read.csv(text=getURL("https://raw.githubusercontent.com/sciruela/Happiness-Salaries/master/data.csv"))
+head(data1)
+summary(data1)
+
+# Visualize the patterns of NA
+
+
+```
+
+## Removal & Management of missing values
+
+```{r removal and management of missing values}
+library(MASS)
+
+# using inbuilt datasets
+data("airquality")
+str(airquality)
+
+head(airquality)
+str(airquality)
+
+# Number of missing values by columm
+colSums(is.na(airquality))
+
+# remove the rows containing NA
+aq <- na.omit(airquality)
+head(aq)
+summary(aq)
+str(aq)
+
+# If we want to retain rows which are non-NA
+aq2 <- airquality[complete.cases(airquality),]
+head(aq2)
+summary(aq2)
+str(aq2)
+
+# if we replace NAs with 0
+aqty <- airquality
+aqty[is.na(aqty)] <- 0
+head(aqty)
+summary(aqty)
+str(aqty)
+
+# replace missing values with average values
+meanOzone <- mean(airquality$Ozone,na.rm = TRUE)
+meanSolar.R <- mean(airquality$Solar.R,na.rm = TRUE)
+aqty$Ozone <- ifelse(is.na(airquality$Ozone),meanOzone,airquality$Ozone)
+aqty$Solar.R <- ifelse(is.na(airquality$Solar.R),meanSolar.R,airquality$Solar.R)
+head(aqty)
+print("Before Mean imputation - Summary for Ozone variable")
+summary(airquality$Ozone)
+print("After Mean imputation - Summary for Ozone variable")
+summary(aqty$Ozone)
+str(aqty)
+```
+```{r Visualization of NAs and more statistical imputations}
+# Visualize the patterns of NAs
+library(mice)
+aqty2 <- airquality
+md.pattern(aqty2)
+
+# The below visualization shows 72.5% observations in the entire data have no missing values
+# 22.9%  missing values in Ozone
+library(VIM)
+mp <- aggr(aqty2,col = c('navyblue','yellow'),numbers = TRUE, sortVars = TRUE, labels = names(aqty2),
+           cex.axis = 0.7, gap = 3, ylab = c("Missing Data","Pattern"))
+
+# Another approach is predictive mean mapping for imputation - we will do 50 iterations and generate 5 datasets
+# we will not print the console output in the markdown file
+```
+```{r,results='hide'}
+im_aqty <- mice(aqty2, m=5, maxit = 50, method = 'pmm',seed = 500)
+```
+```{r}
+summary(im_aqty)
+
+
+# Values imputed in ozone
+im_aqty$imp$Ozone
+
+# using the first dataset, we  complete the data
+completedData <- complete(im_aqty,1)
+head(completedData)
+str(completedData)
+
+```
+
+## More Data Cleaning
+```{r data cleaning techniques}
+# load the dataset
+library(RCurl)
+eco <- read.csv(text = getURL("https://raw.githubusercontent.com/Jojo666/Sentimental-Analysis_R/master/countries_ecologicalF.csv"))
+head(eco)
+str(eco)
+
+# GDP.per.Capita column is a factor and has '$' sign.. which is essentially a currency column (numeric)
+# We will remove those and create a new column
+
+eco$GDP = as.numeric(gsub("[\\$,]","",eco$GDP.per.Capita))
+# Check whether the new column got created
+names(eco)
+head(eco)
+
+# Check how many columns are there in the dataset
+ncol(eco)
+# I will subset and work with only few columns
+mdf = names(eco) %in% c("Population..millions","GDP","Grazing.Footprint","HDI",
+                        "Carbon.Footprint","Cropland","Forest.Land","Urban.Land",
+                        "Total.Biocapacity")
+
+# create the subset data
+newdata = eco[mdf]
+head(newdata)
+
+# If i have to exclude all of the above columns and subset the data
+x = eco[!mdf]
+head(x)
+
+# Check if we have NA in our newdata
+colSums(is.na(newdata))
+
+```
+
+## Including Plots
+
+Perform some Visualizations
+
+```{r pressure, echo=FALSE}
+plot(pressure)
+```
+
+Note that the `echo = FALSE` parameter was added to the code chunk to prevent printing of the R code that generated the plot.
